@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Settings" %} · Compass{% endblock %}
+
+{% block content %}
+<a class="back-link" href="{% url 'home' %}?stay=1">
+  <svg width="17" height="17" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M15 9H4M9 4L4 9l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  {% trans "Back" %}
+</a>
+
+<h1 class="page-title" style="margin:0 0 16px;">{% trans "Settings" %}</h1>
+
+<div class="card">
+  <h2 class="auth-title">{% trans "Preferences" %}</h2>
+
+  <label>{% trans "Language" %}</label>
+  <form class="lang-switch" action="{% url 'set_language' %}" method="post" aria-label="{% trans 'Language' %}">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{% url 'settings' %}">
+    <button type="submit" name="language" value="en"{% if LANGUAGE_CODE == 'en' %} class="active" aria-current="true"{% endif %}>EN</button>
+    <button type="submit" name="language" value="sk"{% if LANGUAGE_CODE == 'sk' %} class="active" aria-current="true"{% endif %}>SK</button>
+  </form>
+
+  <label>{% trans "Appearance" %}</label>
+  <div class="theme-switch" role="group" aria-label="{% trans 'Appearance' %}">
+    <button type="button" data-theme-pref="light">{% trans "Light" %}</button>
+    <button type="button" data-theme-pref="auto">{% trans "System" %}</button>
+    <button type="button" data-theme-pref="dark">{% trans "Dark" %}</button>
+  </div>
+  <p class="footnote" style="margin:8px 0 0;">{% trans "Appearance is saved on this device." %}</p>
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+    <label class="checkbox">
+      {{ prefs_form.auto_redirect }} <span>{{ prefs_form.auto_redirect.label }}</span>
+    </label>
+    <p class="footnote" style="margin:8px 0 0;">{{ prefs_form.auto_redirect.help_text }}</p>
+    <button type="submit" name="action" value="prefs" class="btn btn-primary">
+      {% trans "Save" %}
+    </button>
+  </form>
+</div>
+
+<div class="card" style="margin-top:14px;">
+  <h2 class="auth-title">{% trans "Change password" %}</h2>
+
+  {% if password_form.non_field_errors %}
+  <div class="form-error">{{ password_form.non_field_errors }}</div>
+  {% endif %}
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+
+    <label for="{{ password_form.old_password.id_for_label }}">{% trans "Current password" %}</label>
+    {{ password_form.old_password }}
+    {% if password_form.old_password.errors %}<div class="field-error">{{ password_form.old_password.errors }}</div>{% endif %}
+
+    <label for="{{ password_form.new_password1.id_for_label }}">{% trans "New password" %}</label>
+    {{ password_form.new_password1 }}
+    {% if password_form.new_password1.errors %}<div class="field-error">{{ password_form.new_password1.errors }}</div>{% endif %}
+
+    <label for="{{ password_form.new_password2.id_for_label }}">{% trans "New password again" %}</label>
+    {{ password_form.new_password2 }}
+    {% if password_form.new_password2.errors %}<div class="field-error">{{ password_form.new_password2.errors }}</div>{% endif %}
+
+    <button type="submit" name="action" value="password" class="btn btn-primary">
+      {% trans "Save password" %}
+    </button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% load static i18n %}{% comment %}
+Server-error page. Django renders it with a plain Context — no request, user,
+messages, csrf_token or context processors — so it must stay standalone and
+must not extend base.html or reverse auth URLs.
+{% endcomment %}<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#F3F6F4" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0E1512" media="(prefers-color-scheme: dark)">
+  <title>{% trans "Something went wrong" %} · Compass</title>
+  <link rel="icon" type="image/svg+xml" href="{% static 'icons/compass.svg' %}">
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+  {% include "components/theme_boot.html" %}
+</head>
+<body>
+  <div class="app">
+    <main class="app-main">
+      <div class="empty">
+        <div class="empty-icon">{% include "components/compass_mark.html" %}</div>
+        <h1 class="empty-title">{% trans "Something went wrong" %}</h1>
+        <p class="empty-text">{% trans "The server hit an error. Please try again in a moment." %}</p>
+        <a class="btn btn-primary" href="/" style="width:auto;padding:0 22px;margin-top:22px;">{% trans "Back home" %}</a>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

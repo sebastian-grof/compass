@@ -1,0 +1,32 @@
+{% load static i18n %}{% comment %}
+Offline fallback, pre-cached by the service worker and served for any failed
+page navigation. Standalone on purpose: it must never contain a form or CSRF
+token (a cached stale token breaks every later submit), so it can't extend
+base.html (whose footer language switcher embeds one).
+{% endcomment %}<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#F3F6F4" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0E1512" media="(prefers-color-scheme: dark)">
+  <title>{% trans "You're offline" %} · Compass</title>
+  <link rel="icon" type="image/svg+xml" href="{% static 'icons/compass.svg' %}">
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+  {% include "components/theme_boot.html" %}
+</head>
+<body>
+  <div class="app">
+    <main class="app-main">
+      <div class="empty">
+        <div class="empty-icon">{% include "components/compass_mark.html" %}</div>
+        <h1 class="empty-title">{% trans "You're offline" %}</h1>
+        <p class="empty-text">{% trans "Check your internet connection and try again." %}</p>
+        <button type="button" class="btn btn-primary" style="width:auto;padding:0 22px;margin-top:22px;" onclick="location.reload()">
+          {% trans "Try again" %}
+        </button>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

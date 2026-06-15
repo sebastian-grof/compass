@@ -1,0 +1,500 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-15 20:19+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Compass\n"
+"Language-Team: Slovak\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n "
+">= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);\n"
+
+#: accounts/forms.py:11
+msgid "Keep me signed in"
+msgstr "Zostať prihlásený"
+
+#: accounts/forms.py:15 templates/registration/password_reset_form.html:18
+msgid "Email"
+msgstr "E-mail"
+
+#: accounts/forms.py:24
+msgid "Password"
+msgstr "Heslo"
+
+#: accounts/forms.py:36
+msgid "Open tournament immediately"
+msgstr "Otvoriť turnaj hneď"
+
+#: accounts/forms.py:39
+msgid ""
+"If you have exactly one active tournament, the app redirects you straight "
+"there without showing the list. After returning from Tabbycat, the list "
+"appears normally."
+msgstr ""
+"Ak máš presne jeden aktívny turnaj, aplikácia ťa presmeruje rovno naň bez "
+"zobrazenia zoznamu. Po návrate z Tabbycatu sa zoznam zobrazí normálne."
+
+#: accounts/models.py:42
+msgid "email address"
+msgstr "email address"
+
+#: accounts/models.py:43
+msgid "full name"
+msgstr "full name"
+
+#: accounts/models.py:48
+msgid "auto-redirect to single tournament"
+msgstr "auto-redirect to single tournament"
+
+#: accounts/models.py:49
+msgid "Skip the list and go straight in when only one tournament is active."
+msgstr "Skip the list and go straight in when only one tournament is active."
+
+#: accounts/views.py:65
+msgid "Too many unsuccessful attempts. Try again later."
+msgstr "Príliš veľa neúspešných pokusov. Skús to znova neskôr."
+
+#: accounts/views.py:88
+msgid "The form expired. Please try again."
+msgstr "Platnosť formulára vypršala. Skús to znova."
+
+#: accounts/views.py:108
+msgid "Settings saved."
+msgstr "Nastavenia uložené."
+
+#: accounts/views.py:116
+msgid "Password changed."
+msgstr "Heslo zmenené."
+
+#: core/links.py:30
+msgid "Enter a link."
+msgstr "Zadaj odkaz."
+
+#: core/links.py:33 templates/components/i18n_js.html:7
+msgid "That doesn't look like a valid link."
+msgstr "Toto nevyzerá ako platný odkaz."
+
+#: core/links.py:37
+msgid "That doesn't look like a Tabbycat private URL (missing “privateurls”)."
+msgstr "Odkaz nevyzerá ako súkromný Tabbycat odkaz (chýba „privateurls“)."
+
+#: core/links.py:41 core/links.py:46
+msgid "The link is missing the tournament slug or key."
+msgstr "V odkaze chýba slug turnaja alebo kľúč."
+
+#: core/views.py:82
+#, python-format
+msgid "Tournament “%(name)s” added."
+msgstr "Turnaj „%(name)s“ pridaný."
+
+#: core/views.py:82
+#, python-format
+msgid "Tournament “%(name)s” updated."
+msgstr "Turnaj „%(name)s“ aktualizovaný."
+
+#: core/views.py:106
+msgid "Tournament removed."
+msgstr "Turnaj odstránený."
+
+#: templates/404.html:4 templates/404.html:9
+msgid "Page not found"
+msgstr "Stránka sa nenašla"
+
+#: templates/404.html:10
+msgid "This page does not exist or was moved."
+msgstr "Táto stránka neexistuje alebo bola presunutá."
+
+#: templates/404.html:11 templates/500.html:24
+msgid "Back home"
+msgstr "Späť domov"
+
+#: templates/500.html:12 templates/500.html:22
+msgid "Something went wrong"
+msgstr "Niečo sa pokazilo"
+
+#: templates/500.html:23
+msgid "The server hit an error. Please try again in a moment."
+msgstr "Na serveri nastala chyba. Skús to o chvíľu znova."
+
+#: templates/add_tournament.html:3 templates/add_tournament.html:13
+#: templates/add_tournament.html:33 templates/guest.html:20
+#: templates/home.html:47 templates/home.html:56
+msgid "Add tournament"
+msgstr "Pridať turnaj"
+
+#: templates/add_tournament.html:7
+msgid "Back to tournaments"
+msgstr "Späť na turnaje"
+
+#: templates/add_tournament.html:14
+msgid "Paste your private Tabbycat link or scan the tournament's QR code."
+msgstr "Vlož svoj súkromný Tabbycat odkaz alebo naskenuj QR kód z turnaja."
+
+#: templates/add_tournament.html:25 templates/guest.html:24
+msgid "Private link"
+msgstr "Súkromný odkaz"
+
+#: templates/add_tournament.html:30 templates/guest.html:30
+msgid "Scan QR code"
+msgstr "Skenovať QR kód"
+
+#: templates/add_tournament.html:37
+msgid ""
+"You'll find the link in your Tabbycat email or on the registration slip."
+msgstr "Odkaz nájdeš v e-maile z Tabbycatu alebo na registračnom lístku."
+
+#: templates/base.html:36 templates/settings.html:4 templates/settings.html:12
+msgid "Settings"
+msgstr "Nastavenia"
+
+#: templates/base.html:43
+msgid "Sign out"
+msgstr "Odhlásiť"
+
+#: templates/base.html:64 templates/privacy.html:3
+msgid "Privacy"
+msgstr "Ochrana súkromia"
+
+#: templates/components/i18n_js.html:2
+msgid "Point the camera at the QR code"
+msgstr "Namier kameru na QR kód"
+
+#: templates/components/i18n_js.html:3
+msgid "Cancel"
+msgstr "Zrušiť"
+
+#: templates/components/i18n_js.html:4
+msgid "Camera isn't available. Paste the link instead."
+msgstr "Kamera nie je dostupná. Vlož odkaz ručne."
+
+#: templates/components/i18n_js.html:5
+msgid "Camera access was denied. Paste the link instead."
+msgstr "Prístup ku kamere bol zamietnutý. Vlož odkaz ručne."
+
+#: templates/components/i18n_js.html:6
+msgid "Scanning isn't supported here. Paste the link instead."
+msgstr "Skenovanie tu nie je podporované. Vlož odkaz ručne."
+
+#: templates/components/i18n_js.html:8
+msgid "That doesn't look like a Tabbycat private URL."
+msgstr "Odkaz nevyzerá ako súkromný Tabbycat odkaz."
+
+#: templates/components/i18n_js.html:9
+msgid "Saved on this device"
+msgstr "Uložené v tomto zariadení"
+
+#: templates/components/i18n_js.html:10 templates/home.html:34
+msgid "Remove"
+msgstr "Odstrániť"
+
+#: templates/components/i18n_js.html:11
+msgid "tournament"
+msgstr "turnaj"
+
+#: templates/components/i18n_js.html:12
+msgctxt "few"
+msgid "tournaments"
+msgstr "turnaje"
+
+#: templates/components/i18n_js.html:13
+msgctxt "many"
+msgid "tournaments"
+msgstr "turnajov"
+
+#: templates/guest.html:3
+msgid "Guest"
+msgstr "Hosť"
+
+#: templates/guest.html:10 templates/registration/login.html:4
+#: templates/registration/login.html:38
+#: templates/registration/password_reset_complete.html:10
+msgid "Sign in"
+msgstr "Prihlásiť sa"
+
+#: templates/guest.html:14 templates/home.html:4 templates/home.html:16
+msgid "Your tournaments"
+msgstr "Tvoje turnaje"
+
+#: templates/guest.html:32 templates/settings.html:40
+msgid "Save"
+msgstr "Uložiť"
+
+#: templates/guest.html:39 templates/home.html:52
+msgid "No tournaments yet"
+msgstr "Zatiaľ žiadne turnaje"
+
+#: templates/guest.html:40
+msgid ""
+"Add your private link or scan a tournament's QR code and it'll be saved here."
+msgstr ""
+"Pridaj svoj súkromný odkaz alebo naskenuj QR kód z turnaja a uloží sa ti sem."
+
+#: templates/guest.html:45
+#, python-format
+msgid ""
+"Tournaments are saved only in this browser. When you <a "
+"href=\"%(login_url)s\">sign in</a>, you can move them into your account."
+msgstr ""
+"Turnaje sú uložené len v tomto prehliadači. Keď sa <a "
+"href=\"%(login_url)s\">prihlásiš</a>, môžeš si ich preniesť do účtu."
+
+#: templates/home.html:11
+msgid "Import"
+msgstr "Preniesť"
+
+#: templates/home.html:17
+#, python-format
+msgid "%(counter)s active"
+msgid_plural "%(counter)s active"
+msgstr[0] "%(counter)s aktívny"
+msgstr[1] "%(counter)s aktívne"
+msgstr[2] "%(counter)s aktívne"
+msgstr[3] "%(counter)s aktívnych"
+
+#: templates/home.html:27
+msgid "In progress"
+msgstr "Práve prebieha"
+
+#: templates/home.html:27
+msgid "Active tournament"
+msgstr "Aktívny turnaj"
+
+#: templates/home.html:29
+msgid "Live"
+msgstr "Prebieha"
+
+#: templates/home.html:32
+msgid "Remove this tournament?"
+msgstr "Odstrániť tento turnaj?"
+
+#: templates/home.html:53
+msgid ""
+"When you're assigned to a tournament in Tabbycat, it'll appear here "
+"automatically. Or add one yourself."
+msgstr ""
+"Keď ťa v Tabbycate priradia k turnaju, automaticky sa tu objaví. Alebo si ho "
+"pridaj sám."
+
+#: templates/home.html:90
+msgid "You have 1 tournament saved as a guest."
+msgstr "Máš 1 turnaj uložený ako hosť."
+
+#: templates/home.html:91
+#, python-brace-format
+msgid "You have {n} tournaments saved as a guest."
+msgstr "Máš {n} turnajov uložených ako hosť."
+
+#: templates/home.html:102
+msgid "Import failed, please try again."
+msgstr "Prenos zlyhal, skús znova."
+
+#: templates/offline.html:13 templates/offline.html:23
+msgid "You're offline"
+msgstr "Si offline"
+
+#: templates/offline.html:24
+msgid "Check your internet connection and try again."
+msgstr "Skontroluj pripojenie na internet a skús to znova."
+
+#: templates/offline.html:26
+msgid "Try again"
+msgstr "Skúsiť znova"
+
+#: templates/privacy.html:7 templates/settings.html:9
+msgid "Back"
+msgstr "Späť"
+
+#: templates/registration/login.html:10
+msgid "Your tournaments. One tap."
+msgstr "Tvoje turnaje. Jeden ťuk."
+
+#: templates/registration/login.html:14
+msgid "Welcome back"
+msgstr "Vitaj späť"
+
+#: templates/registration/login.html:15
+msgid "Sign in to your private links."
+msgstr "Prihlás sa k svojim súkromným odkazom."
+
+#: templates/registration/login.html:43
+msgid "Set or reset your password"
+msgstr "Nastaviť alebo obnoviť heslo"
+
+#: templates/registration/login.html:44
+msgid "or"
+msgstr "alebo"
+
+#: templates/registration/login.html:45
+msgid "Continue as guest"
+msgstr "Pokračovať ako hosť"
+
+#: templates/registration/password_reset_complete.html:3
+msgid "Password set"
+msgstr "Heslo nastavené"
+
+#: templates/registration/password_reset_complete.html:8
+msgid "All done"
+msgstr "Hotovo"
+
+#: templates/registration/password_reset_complete.html:9
+msgid "Your password is saved. You can sign in now."
+msgstr "Tvoje heslo je uložené. Teraz sa môžeš prihlásiť."
+
+#: templates/registration/password_reset_confirm.html:3
+#: templates/registration/password_reset_confirm.html:9
+msgid "Choose a password"
+msgstr "Zvoľ si heslo"
+
+#: templates/registration/password_reset_confirm.html:10
+msgid "Set a new password for your account."
+msgstr "Nastav si nové heslo pre svoj účet."
+
+#: templates/registration/password_reset_confirm.html:13
+#: templates/settings.html:59
+msgid "New password"
+msgstr "Nové heslo"
+
+#: templates/registration/password_reset_confirm.html:16
+msgid "Confirm password"
+msgstr "Potvrď heslo"
+
+#: templates/registration/password_reset_confirm.html:19
+#: templates/settings.html:68
+msgid "Save password"
+msgstr "Uložiť heslo"
+
+#: templates/registration/password_reset_confirm.html:25
+msgid "Link expired"
+msgstr "Odkaz vypršal"
+
+#: templates/registration/password_reset_confirm.html:26
+msgid ""
+"This password link is invalid or has already been used. Request a new one."
+msgstr ""
+"Tento odkaz na heslo je neplatný alebo už bol použitý. Vyžiadaj si nový."
+
+#: templates/registration/password_reset_confirm.html:27
+msgid "Get a new link"
+msgstr "Získať nový odkaz"
+
+#: templates/registration/password_reset_done.html:3
+#: templates/registration/password_reset_done.html:13
+msgid "Check your email"
+msgstr "Skontroluj si e-mail"
+
+#: templates/registration/password_reset_done.html:7
+#: templates/registration/password_reset_form.html:7
+msgid "Back to sign in"
+msgstr "Späť na prihlásenie"
+
+#: templates/registration/password_reset_done.html:14
+msgid ""
+"If an account exists for that address, we've sent a link to set your "
+"password. It may take a minute to arrive."
+msgstr ""
+"Ak pre túto adresu existuje účet, poslali sme ti odkaz na nastavenie hesla. "
+"Doručenie môže chvíľu trvať."
+
+#: templates/registration/password_reset_email.html:1
+#, python-format
+msgid ""
+"Hi,\n"
+"\n"
+"you can set your Compass password using the link below:\n"
+"\n"
+"%(protocol)s://%(domain)s%(reset_path)s\n"
+"\n"
+"Once it's set, sign in with your email (%(email)s) to reach your tournament "
+"private links.\n"
+"\n"
+"If you didn't expect this email, you can safely ignore it.\n"
+"\n"
+"— Compass"
+msgstr ""
+"Ahoj,\n"
+"\n"
+"heslo do Compass si môžeš nastaviť cez tento odkaz:\n"
+"\n"
+"%(protocol)s://%(domain)s%(reset_path)s\n"
+"\n"
+"Keď ho nastavíš, prihlás sa svojím e-mailom (%(email)s) a dostaneš sa k "
+"súkromným odkazom na svoje turnaje.\n"
+"\n"
+"Ak si tento e-mail nečakal, môžeš ho pokojne ignorovať.\n"
+"\n"
+"— Compass"
+
+#: templates/registration/password_reset_email.html:13
+#, python-format
+msgid "How we handle your data: %(protocol)s://%(domain)s%(privacy_path)s"
+msgstr "Ako spracúvame tvoje údaje: %(protocol)s://%(domain)s%(privacy_path)s"
+
+#: templates/registration/password_reset_form.html:3
+#: templates/registration/password_reset_form.html:13
+msgid "Reset password"
+msgstr "Obnova hesla"
+
+#: templates/registration/password_reset_form.html:14
+msgid "Enter your email and we'll send you a link to set a new password."
+msgstr "Zadaj svoj e-mail a pošleme ti odkaz na nastavenie nového hesla."
+
+#: templates/registration/password_reset_form.html:22
+msgid "Send reset link"
+msgstr "Poslať odkaz na obnovu"
+
+#: templates/registration/password_reset_form.html:26
+msgid "You set your own password — your account was created by an organizer."
+msgstr "Heslo si nastavuješ sám — účet ti vytvoril organizátor."
+
+#: templates/registration/password_reset_subject.txt:1
+msgid "Set your Compass password"
+msgstr "Nastav si heslo do Compass"
+
+#: templates/settings.html:15
+msgid "Preferences"
+msgstr "Predvoľby"
+
+#: templates/settings.html:17 templates/settings.html:18
+msgid "Language"
+msgstr "Jazyk"
+
+#: templates/settings.html:25 templates/settings.html:26
+msgid "Appearance"
+msgstr "Vzhľad"
+
+#: templates/settings.html:27
+msgid "Light"
+msgstr "Svetlý"
+
+#: templates/settings.html:28
+msgid "System"
+msgstr "Systém"
+
+#: templates/settings.html:29
+msgid "Dark"
+msgstr "Tmavý"
+
+#: templates/settings.html:31
+msgid "Appearance is saved on this device."
+msgstr "Vzhľad sa ukladá v tomto zariadení."
+
+#: templates/settings.html:46
+msgid "Change password"
+msgstr "Zmena hesla"
+
+#: templates/settings.html:55
+msgid "Current password"
+msgstr "Súčasné heslo"
+
+#: templates/settings.html:63
+msgid "New password again"
+msgstr "Nové heslo znova"

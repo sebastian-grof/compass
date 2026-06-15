@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Privacy" %} · Compass{% endblock %}
+{% block content %}
+<a class="back-link" href="{% url 'home' %}">
+  <svg width="17" height="17" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M15 9H4M9 4L4 9l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  {% trans "Back" %}
+</a>
+
+<div class="legal">
+{{ privacy_html|safe }}
+</div>
+{% endblock %}

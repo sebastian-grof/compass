@@ -1,0 +1,11 @@
+# Compass runtime dependencies
+Django>=5.2
+httpx>=0.27
+cryptography>=42
+python-dotenv>=1.0
+dj-database-url>=2.1
+whitenoise>=6.6
+
+# Production server / database
+gunicorn>=22.0
+psycopg[binary]>=3.2

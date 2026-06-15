@@ -1,0 +1,22 @@
+{% comment %}
+Compass mark — a needle (two SDA triangles) inside a ringed dial.
+Reused across the brand badge and standalone (empty-state) contexts.
+
+Params (all optional):
+  ring  — circle + ticks colour (default deep green)
+  north — top needle colour     (default SDA green)
+  south — bottom needle colour  (default deep green)
+  dot   — centre pivot fill      (default white)
+{% endcomment %}
+<svg class="compass-mark" viewBox="0 0 100 100" fill="none" aria-hidden="true" focusable="false">
+  <circle cx="50" cy="50" r="44" stroke="{{ ring|default:'#0F4B42' }}" stroke-width="6"/>
+  <rect x="49" y="6" width="2" height="7" rx="1" fill="{{ ring|default:'#0F4B42' }}" transform="rotate(0 50 50)"/>
+  <rect x="49" y="6" width="2" height="7" rx="1" fill="{{ ring|default:'#0F4B42' }}" transform="rotate(90 50 50)"/>
+  <rect x="49" y="6" width="2" height="7" rx="1" fill="{{ ring|default:'#0F4B42' }}" transform="rotate(180 50 50)"/>
+  <rect x="49" y="6" width="2" height="7" rx="1" fill="{{ ring|default:'#0F4B42' }}" transform="rotate(270 50 50)"/>
+  <g transform="rotate(24 50 50)">
+    <path d="M50 20 L57 50 L43 50 Z" fill="{{ north|default:'#21D46E' }}"/>
+    <path d="M50 80 L57 50 L43 50 Z" fill="{{ south|default:'#0F4B42' }}" fill-opacity="0.92"/>
+  </g>
+  <circle cx="50" cy="50" r="5.5" fill="{{ dot|default:'#FFFFFF' }}" stroke="{{ ring|default:'#0F4B42' }}" stroke-width="2.5"/>
+</svg>

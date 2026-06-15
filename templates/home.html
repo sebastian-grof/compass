@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static i18n humanize %}
+
+{% block title %}{% trans "Your tournaments" %} · Compass{% endblock %}
+
+{% block content %}
+<div class="ptr-indicator" id="ptr" aria-hidden="true"></div>
+
+<div id="import-banner" class="import-banner" hidden>
+  <span id="import-text"></span>
+  <button type="button" class="btn-inline" id="import-btn">{% trans "Import" %}</button>
+</div>
+
+{% if tournaments %}
+<div class="page-head">
+  <h1 class="page-title">{% trans "Your tournaments" %}</h1>
+  <span class="count">{% blocktrans count counter=tournaments|length %}{{ counter }} active{% plural %}{{ counter }} active{% endblocktrans %}</span>
+</div>
+
+<ul class="tournament-list">
+  {% for t in tournaments %}
+  <li class="tournament{% if t.is_running %} running{% endif %}">
+    <a class="tournament-main" href="{% url 'go' t.id %}">
+      <span class="status-dot"><span></span></span>
+      <span class="tournament-body">
+        <span class="tournament-name">{{ t.display_name }}</span>
+        <span class="tournament-meta">{% if t.is_running %}{% trans "In progress" %}{% else %}{% trans "Active tournament" %}{% endif %}{% if t.last_seen_at %} · {{ t.last_seen_at|naturaltime }}{% endif %}</span>
+      </span>
+      {% if t.is_running %}<span class="badge">{% trans "Live" %}</span>{% endif %}
+    </a>
+    {% if t.self_added %}
+    <form method="post" action="{% url 'remove_tournament' t.id %}" class="row-del-form" onsubmit="return confirm('{% trans "Remove this tournament?" %}');">
+      {% csrf_token %}
+      <button type="submit" class="row-del" aria-label="{% trans 'Remove' %}" title="{% trans 'Remove' %}">✕</button>
+    </form>
+    {% else %}
+    <span class="chevron" aria-hidden="true">
+      <svg width="17" height="17" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </span>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+
+<a class="btn btn-ghost" href="{% url 'add_tournament' %}" style="margin-top:14px;">
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 4v10M4 9h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  {% trans "Add tournament" %}
+</a>
+{% else %}
+<div class="empty">
+  <div class="empty-icon">{% include "components/compass_mark.html" %}</div>
+  <h1 class="empty-title">{% trans "No tournaments yet" %}</h1>
+  <p class="empty-text">{% trans "When you're assigned to a tournament in Tabbycat, it'll appear here automatically. Or add one yourself." %}</p>
+  <a class="btn btn-primary" href="{% url 'add_tournament' %}" style="width:auto;padding:0 22px;margin-top:22px;">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 4v10M4 9h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    {% trans "Add tournament" %}
+  </a>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/pull-refresh.js' %}" defer></script>
+<script>
+// Instant feedback on tap: a /go/ redirect can take seconds (sleeping dyno),
+// so show a spinner on the card instead of looking dead. pageshow clears it
+// when the user comes back via the bfcache.
+(function () {
+  document.querySelectorAll(".tournament-main").forEach(function (link) {
+    link.addEventListener("click", function () {
+      link.closest(".tournament").classList.add("loading");
+    });
+  });
+  window.addEventListener("pageshow", function () {
+    document.querySelectorAll(".tournament.loading").forEach(function (el) {
+      el.classList.remove("loading");
+    });
+  });
+})();
+</script>
+<script>
+(function () {
+  var KEY = "compass_guest_tournaments";
+  var items = [];
+  try { items = JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) {}
+  if (!items.length) return;
+  var banner = document.getElementById("import-banner");
+  var n = items.length;
+  document.getElementById("import-text").textContent = (n === 1)
+    ? "{% trans 'You have 1 tournament saved as a guest.' %}"
+    : "{% trans 'You have {n} tournaments saved as a guest.' %}".replace("{n}", n);
+  banner.hidden = false;
+  document.getElementById("import-btn").addEventListener("click", function () {
+    var token = document.querySelector('meta[name="csrf-token"]').content;
+    fetch("{% url 'import_guest' %}", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-CSRFToken": token },
+      body: JSON.stringify({ urls: items.map(function (x) { return x.url; }) }),
+    })
+      .then(function (r) { return r.json(); })
+      .then(function () { localStorage.removeItem(KEY); location.reload(); })
+      .catch(function () { window.alert("{% trans 'Import failed, please try again.' %}"); });
+  });
+})();
+</script>
+{% endblock %}

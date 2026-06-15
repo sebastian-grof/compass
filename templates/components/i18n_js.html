@@ -1,0 +1,30 @@
+{% load i18n %}
+{% translate "Point the camera at the QR code" as s_scan_hint %}
+{% translate "Cancel" as s_cancel %}
+{% translate "Camera isn't available. Paste the link instead." as s_no_camera %}
+{% translate "Camera access was denied. Paste the link instead." as s_camera_denied %}
+{% translate "Scanning isn't supported here. Paste the link instead." as s_scan_unsupported %}
+{% translate "That doesn't look like a valid link." as s_invalid_link %}
+{% translate "That doesn't look like a Tabbycat private URL." as s_not_private %}
+{% translate "Saved on this device" as s_saved_here %}
+{% translate "Remove" as s_remove %}
+{% translate "tournament" as s_one %}
+{% translate "tournaments" context "few" as s_few %}
+{% translate "tournaments" context "many" as s_many %}
+<script>
+  window.COMPASS_I18N = {
+    lang: "{{ LANGUAGE_CODE|escapejs }}",
+    scanHint: "{{ s_scan_hint|escapejs }}",
+    cancel: "{{ s_cancel|escapejs }}",
+    noCamera: "{{ s_no_camera|escapejs }}",
+    cameraDenied: "{{ s_camera_denied|escapejs }}",
+    scanUnsupported: "{{ s_scan_unsupported|escapejs }}",
+    invalidLink: "{{ s_invalid_link|escapejs }}",
+    notPrivateUrl: "{{ s_not_private|escapejs }}",
+    savedHere: "{{ s_saved_here|escapejs }}",
+    remove: "{{ s_remove|escapejs }}",
+    one: "{{ s_one|escapejs }}",
+    few: "{{ s_few|escapejs }}",
+    many: "{{ s_many|escapejs }}"
+  };
+</script>

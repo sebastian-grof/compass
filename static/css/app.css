@@ -1,0 +1,703 @@
+/* Compass — light SDA design system.
+   Airy white, soft cards, bright SDA green as the single accent. Spirit of
+   Tabbycat. Typography: Epilogue. Recreated from the "Compass Redizajn" handoff. */
+
+:root {
+  color-scheme: light;
+
+  /* SDA brand */
+  --green: #21D46E;       /* Zelená SDA — primary accent */
+  --green-deep: #0F4B42;  /* Tmavozelená SDA — brand ink for text/accents */
+  --ink: #0A2A1C;         /* near-black green for body text */
+  --on-green: #0A2A1C;    /* text on the bright green accent (both themes) */
+
+  /* light neutrals (green-tinted, restrained) */
+  --bg: #F3F6F4;
+  --card: #FFFFFF;
+  --card-press: #fbfdfc;
+  --line: #E1E8E3;
+  --line-2: #D2DCD6;
+  --muted: #5B6B62;
+  --muted-2: #8A988F;
+  --green-soft: #E4F7EC;
+  --green-soft-2: #D6F2E1;
+  --green-active: #1cc065;
+
+  /* state */
+  --danger: #E81525;
+  --danger-bg: #FDECEC;
+  --danger-line: #F6CFCF;
+  --danger-ink: #A11320;
+  --danger-text: #B0414B;
+
+  --radius: 16px;
+  --shadow: 0 1px 2px rgba(12, 26, 20, 0.04), 0 8px 24px rgba(12, 26, 20, 0.06);
+}
+
+/* Dark theme. Applied via data-theme on <html>, set before first paint by
+   templates/components/theme_boot.html (user choice from the footer switcher,
+   or the system preference by default). Same green accent; --green-deep flips
+   to a light readable green since every CSS use of it is text/iconography on
+   background. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --green-deep: #3BE283;
+  --ink: #E9F2EC;
+
+  --bg: #0E1512;
+  --card: #16201B;
+  --card-press: #1B2620;
+  --line: #25312A;
+  --line-2: #36443C;
+  --muted: #9FAFA5;
+  --muted-2: #6E7E74;
+  --green-soft: rgba(33, 212, 110, 0.14);
+  --green-soft-2: rgba(33, 212, 110, 0.26);
+
+  --danger: #FF5C66;
+  --danger-bg: #2A1518;
+  --danger-line: #4A2228;
+  --danger-ink: #FF8A91;
+  --danger-text: #F2A6AC;
+
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* The compass mark and icon tiles hardcode the light brand ink in their SVG
+   params; recolour them via CSS where they sit on dark surfaces. */
+[data-theme="dark"] .empty-icon .compass-mark circle,
+[data-theme="dark"] .empty-icon .compass-mark rect { stroke: var(--green-deep); }
+[data-theme="dark"] .empty-icon .compass-mark rect { fill: var(--green-deep); stroke: none; }
+[data-theme="dark"] .empty-icon .compass-mark path[fill="#0F4B42"] { fill: var(--green-deep); }
+[data-theme="dark"] .empty-icon .compass-mark circle[fill="#FFFFFF"] { fill: var(--card); }
+[data-theme="dark"] .icon-tile svg [stroke="#0F4B42"] { stroke: var(--green-deep); }
+
+* { box-sizing: border-box; }
+
+/* The `hidden` attribute must win over class display rules (.empty/.import-banner
+   set display:flex, which would otherwise override the UA [hidden] rule). */
+[hidden] { display: none !important; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  /* Suppress the browser's native pull-to-refresh; the app ships its own
+     (static/js/pull-refresh.js) so the two never double-fire. */
+  overscroll-behavior-y: contain;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Epilogue", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.app {
+  max-width: 460px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  padding: calc(env(safe-area-inset-top) + 14px) 20px calc(env(safe-area-inset-bottom) + 30px);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header (authenticated only) ─────────────────────────────── */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+.wordmark {
+  font-weight: 800;
+  font-size: 1.125rem;
+  letter-spacing: -0.02em;
+  color: var(--green-deep);
+  line-height: 1;
+}
+
+.header-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  color: var(--muted);
+}
+.icon-btn:active { color: var(--green-deep); background: var(--green-soft); }
+
+.logout { margin: 0; }
+.link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 2px;
+}
+.link-btn:active { color: var(--green-deep); }
+
+.app-main { flex: 1; display: flex; flex-direction: column; }
+
+/* ── Compass mark / badge ────────────────────────────────────── */
+.compass-mark { display: block; }
+
+.compass-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--green);
+}
+.compass-badge .compass-mark { width: 66%; height: 66%; }
+.compass-badge--lg { width: 62px; height: 62px; border-radius: 18px; }
+
+/* ── Generic text helpers ────────────────────────────────────── */
+.muted { color: var(--muted); }
+.muted-2 { color: var(--muted-2); }
+.center { text-align: center; }
+a { color: var(--green-deep); text-decoration: none; }
+
+/* ── Page title row ──────────────────────────────────────────── */
+.page-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 2px 0 16px;
+}
+.page-title {
+  font-size: 1.7rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin: 0;
+}
+.count {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* ── Cards ───────────────────────────────────────────────────── */
+.card {
+  background: var(--card);
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: var(--shadow);
+}
+
+/* ── Login / auth branding header ────────────────────────────── */
+.auth-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 18px 0 26px;
+}
+.auth-brand .wordmark { font-size: 1.625rem; margin-top: 14px; }
+.auth-brand .tagline { font-size: 0.85rem; font-weight: 600; color: var(--muted); margin-top: 6px; }
+
+.auth-title { font-size: 1.3125rem; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 4px; }
+.auth-sub { font-size: 0.85rem; font-weight: 500; color: var(--muted); margin: 0 0 20px; }
+
+.auth-link { display: block; text-align: center; margin-top: 18px; font-size: 0.85rem; font-weight: 600; color: var(--green-deep); }
+
+/* Back-to-login link (reset flow) */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--green-deep);
+  margin-bottom: 28px;
+}
+
+/* Icon tile (reset / info screens) */
+.icon-tile {
+  width: 60px;
+  height: 60px;
+  border-radius: 17px;
+  background: var(--green-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* ── Forms ───────────────────────────────────────────────────── */
+form { margin: 0; }
+
+label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin: 14px 0 7px;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"],
+input[type="url"] {
+  width: 100%;
+  height: 50px;
+  padding: 0 15px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-radius: 13px;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+input::placeholder { color: var(--muted-2); font-weight: 500; }
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus,
+input[type="url"]:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 4px rgba(33, 212, 110, 0.14);
+}
+
+/* Remember-me / inline checkbox */
+label.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0 4px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+label.checkbox input {
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  accent-color: var(--green);
+  flex-shrink: 0;
+  margin: 0;
+}
+
+/* ── Buttons ─────────────────────────────────────────────────── */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  height: 52px;
+  margin-top: 20px;
+  padding: 0 16px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.btn-primary {
+  background: var(--green);
+  color: var(--on-green);
+  box-shadow: 0 8px 18px rgba(33, 212, 110, 0.34);
+}
+.btn-primary:active { background: var(--green-active); }
+.btn svg { display: block; }
+
+.btn-ghost {
+  background: var(--card);
+  color: var(--green-deep);
+  border: 1.5px solid var(--line-2);
+}
+.btn-ghost:active { background: var(--bg); }
+
+/* "alebo" divider on the login screen */
+.auth-divider { display: flex; align-items: center; gap: 12px; margin: 20px 0 12px; }
+.auth-divider::before, .auth-divider::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.auth-divider span {
+  font-size: 0.72rem; font-weight: 700; color: var(--muted-2);
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+
+/* Guest → account import banner */
+.import-banner {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 13px 15px; margin-bottom: 14px; border-radius: 14px;
+  background: var(--green-soft); border: 1.5px solid var(--green-soft-2);
+  color: var(--green-deep); font-size: 0.85rem; font-weight: 600; box-shadow: var(--shadow);
+}
+.btn-inline {
+  flex-shrink: 0; background: var(--green); color: var(--on-green); border: none;
+  border-radius: 999px; padding: 8px 15px; font-family: inherit;
+  font-size: 0.82rem; font-weight: 700; cursor: pointer;
+}
+
+/* Delete control inside guest tournament rows */
+.row-del {
+  flex-shrink: 0; width: 28px; height: 28px; border: none; background: transparent;
+  color: var(--muted-2); font-size: 0.95rem; line-height: 1; cursor: pointer; border-radius: 8px;
+}
+.row-del:active { background: var(--bg); color: var(--danger); }
+
+/* ── Settings rows ───────────────────────────────────────────── */
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 16px 18px;
+}
+.setting-name { font-size: 0.95rem; font-weight: 700; color: var(--ink); }
+
+/* Footer: privacy link */
+.app-footer {
+  margin-top: 28px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.footer-link {
+  font-size: 0.8rem; font-weight: 600; color: var(--muted); text-decoration: none;
+}
+.footer-link:hover { color: var(--green-deep); }
+
+/* Segmented language toggle */
+.lang-switch {
+  display: inline-flex;
+  margin-left: auto; /* keep on the right even when the privacy link is hidden */
+  gap: 2px;
+  padding: 3px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+.lang-switch button {
+  background: none; border: none; cursor: pointer; font-family: inherit;
+  font-size: 0.72rem; font-weight: 800; letter-spacing: 0.03em;
+  color: var(--muted-2); padding: 5px 12px; border-radius: 999px;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.lang-switch button:hover { color: var(--green-deep); }
+.lang-switch button.active { color: var(--green-deep); background: var(--green-soft); }
+
+/* Segmented theme preference (light / system / dark) on the settings page.
+   Applied client-side by components/theme_boot.html; stored per device. */
+.theme-switch {
+  display: flex;
+  gap: 3px;
+  padding: 4px;
+  background: var(--bg);
+  border: 1.5px solid var(--line);
+  border-radius: 13px;
+}
+.theme-switch button {
+  flex: 1;
+  padding: 9px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 9px;
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--muted);
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.theme-switch button:hover { color: var(--green-deep); }
+.theme-switch button.active {
+  color: var(--green-deep);
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+
+/* Legal / prose pages (privacy) */
+.legal { padding: 4px 2px 8px; }
+.legal h1 { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; margin: 6px 0; }
+.legal h2 { font-size: 1rem; font-weight: 800; color: var(--green-deep); margin: 22px 0 6px; }
+.legal p, .legal li { font-size: 0.9rem; font-weight: 500; line-height: 1.55; color: var(--muted); }
+.legal ul { margin: 6px 0; padding-left: 20px; }
+.legal li { margin-bottom: 4px; }
+.legal strong { color: var(--ink); font-weight: 700; }
+.legal a { color: var(--green-deep); font-weight: 600; }
+.legal-date { font-size: 0.8rem !important; color: var(--muted-2) !important; margin: 0 0 18px; }
+
+/* QR scanner overlay */
+.qr-overlay {
+  position: fixed; inset: 0; z-index: 1000; padding: 24px;
+  background: rgba(10, 42, 28, 0.92);
+  display: flex; align-items: center; justify-content: center;
+}
+.qr-card {
+  position: relative; width: 100%; max-width: 360px; aspect-ratio: 1 / 1;
+  border-radius: 24px; overflow: hidden; background: #000;
+  display: flex; align-items: center; justify-content: center;
+}
+.qr-video { width: 100%; height: 100%; object-fit: cover; }
+.qr-frame {
+  position: absolute; inset: 18%; border: 3px solid rgba(255, 255, 255, 0.9);
+  border-radius: 18px; box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.22);
+}
+.qr-hint {
+  position: absolute; bottom: 62px; left: 0; right: 0; text-align: center;
+  color: #fff; font-size: 0.9rem; font-weight: 600; text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+.qr-cancel {
+  position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
+  background: #fff; color: #0A2A1C; border: none; border-radius: 999px;
+  padding: 10px 22px; font-family: inherit; font-size: 0.9rem; font-weight: 700; cursor: pointer;
+}
+
+/* ── Tournament list ─────────────────────────────────────────── */
+.tournament-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 11px;
+}
+
+.tournament {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 17px 16px;
+  background: var(--card);
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--ink);
+  box-shadow: var(--shadow);
+  border: 1.5px solid transparent;
+}
+.tournament:active { background: var(--card-press); }
+.tournament.running { border-color: var(--green); }
+
+/* Clickable area of a row that also hosts a trailing control (e.g. remove). */
+.tournament-main {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+  text-decoration: none;
+  color: inherit;
+}
+.row-del-form { margin: 0; flex-shrink: 0; display: flex; }
+
+.status-dot {
+  width: 12px;
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.status-dot span {
+  width: 11px;
+  height: 11px;
+  border-radius: 6px;
+  border: 2px solid var(--line-2);
+}
+.tournament.running .status-dot span {
+  background: var(--green);
+  border: none;
+  box-shadow: 0 0 0 4px rgba(33, 212, 110, 0.15);
+}
+
+.tournament-body { flex: 1; min-width: 0; }
+.tournament-name {
+  display: block;
+  font-size: 0.97rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  color: var(--ink);
+}
+.tournament-meta {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--muted-2);
+  margin-top: 3px;
+}
+.tournament.running .tournament-meta { color: var(--green-deep); }
+
+.badge {
+  font-size: 0.6875rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--green-deep);
+  background: var(--green-soft);
+  padding: 5px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.chevron { flex-shrink: 0; display: flex; color: var(--line-2); }
+
+/* In-flight /go/ redirect: dim the row and swap the trailing control for a
+   spinner so a slow redirect (sleeping dyno) shows progress instead of nothing. */
+.tournament.loading { opacity: 0.7; }
+.tournament.loading .badge,
+.tournament.loading .chevron { display: none; }
+.tournament.loading .tournament-main::after {
+  content: "";
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2.5px solid var(--green-soft-2);
+  border-top-color: var(--green);
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Pull-to-refresh indicator (home): starts above the viewport, pulled into
+   view by static/js/pull-refresh.js. */
+.ptr-indicator {
+  position: fixed;
+  top: calc(env(safe-area-inset-top) - 44px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--card);
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 50;
+  transition: opacity 0.15s ease;
+}
+.ptr-indicator::after {
+  content: "";
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2.5px solid var(--line-2);
+  border-top-color: var(--green);
+}
+.ptr-indicator.visible { opacity: 1; }
+.ptr-indicator.armed::after { border-color: var(--green-soft-2); border-top-color: var(--green); }
+.ptr-indicator.refreshing::after { animation: spin 0.7s linear infinite; }
+
+/* ── Empty state ─────────────────────────────────────────────── */
+.empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-bottom: 40px;
+}
+.empty-icon {
+  width: 116px;
+  height: 116px;
+  border-radius: 50%;
+  background: var(--green-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+.empty-icon .compass-mark { width: 66px; height: 66px; }
+.empty-title { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 9px; }
+.empty-text { font-size: 0.875rem; font-weight: 500; color: var(--muted); line-height: 1.5; max-width: 260px; margin: 0; }
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 22px;
+  padding: 10px 16px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--green-deep);
+  background: var(--card);
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+}
+
+/* Generic muted footnote */
+.footnote { font-size: 0.81rem; font-weight: 500; color: var(--muted-2); line-height: 1.5; }
+
+/* ── Messages / banners ──────────────────────────────────────── */
+.messages { list-style: none; margin: 0 0 14px; padding: 0; display: grid; gap: 10px; }
+.message {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 13px 15px;
+  border-radius: 14px;
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: var(--muted);
+  box-shadow: var(--shadow);
+}
+.message.error {
+  background: var(--danger-bg);
+  border-color: var(--danger-line);
+  color: var(--danger-text);
+  font-weight: 600;
+}
+.message.success {
+  background: var(--green-soft);
+  border-color: var(--green-soft-2);
+  color: var(--green-deep);
+  font-weight: 600;
+}
+
+/* Form-level errors */
+.form-error, .field-error {
+  display: flex;
+  gap: 9px;
+  color: var(--danger-ink);
+  background: var(--danger-bg);
+  border: 1.5px solid var(--danger-line);
+  padding: 11px 13px;
+  border-radius: 13px;
+  font-size: 0.83rem;
+  font-weight: 600;
+  margin-top: 12px;
+}
+.field-error {
+  background: none;
+  border: none;
+  padding: 6px 2px 0;
+  margin-top: 0;
+  color: var(--danger);
+}

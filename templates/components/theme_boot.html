@@ -1,0 +1,52 @@
+{% comment %}
+Theme boot — inlined in <head> of every page (base.html + the standalone
+offline/500 pages) so the chosen theme applies before first paint.
+
+Preference lives in localStorage ("light" / "dark"; absent = follow the
+system), so it works for guests and on the login page too. The script sets
+data-theme on <html> (which static/css/app.css keys its palettes off),
+keeps the theme-color metas in sync, and wires up any [data-theme-pref]
+switcher buttons present on the page.
+{% endcomment %}
+<script>
+(function () {
+  var KEY = "compass_theme";
+  var mql = window.matchMedia("(prefers-color-scheme: dark)");
+
+  function stored() {
+    try { return localStorage.getItem(KEY); } catch (e) { return null; }
+  }
+
+  function apply() {
+    var pref = stored() || "auto";
+    var dark = pref === "dark" || (pref === "auto" && mql.matches);
+    document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
+    var color = dark ? "#0E1512" : "#F3F6F4";
+    document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
+      m.setAttribute("content", color);
+    });
+    document.querySelectorAll("[data-theme-pref]").forEach(function (btn) {
+      var active = btn.getAttribute("data-theme-pref") === pref;
+      btn.classList.toggle("active", active);
+      btn.setAttribute("aria-pressed", active ? "true" : "false");
+    });
+  }
+
+  apply();
+  if (mql.addEventListener) mql.addEventListener("change", apply);
+
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll("[data-theme-pref]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var pref = btn.getAttribute("data-theme-pref");
+        try {
+          if (pref === "auto") localStorage.removeItem(KEY);
+          else localStorage.setItem(KEY, pref);
+        } catch (e) {}
+        apply();
+      });
+    });
+    apply(); // sync the active state now that the buttons exist
+  });
+})();
+</script>

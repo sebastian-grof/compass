@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="240" viewBox="0 0 860 240" fill="none" role="img" aria-label="Compass">
+  <!-- brand banner: soft SDA card, green compass tile, deep-green wordmark -->
+  <rect x="2" y="2" width="856" height="236" rx="32" fill="#F3F6F4" stroke="#E1E8E3" stroke-width="2"/>
+
+  <!-- compass icon tile -->
+  <rect x="56" y="54" width="132" height="132" rx="30" fill="#21D46E"/>
+  <g transform="translate(78 76) scale(0.88)">
+    <circle cx="50" cy="50" r="44" stroke="#FFFFFF" stroke-width="6"/>
+    <rect x="49" y="6" width="2" height="7" rx="1" fill="#FFFFFF" transform="rotate(0 50 50)"/>
+    <rect x="49" y="6" width="2" height="7" rx="1" fill="#FFFFFF" transform="rotate(90 50 50)"/>
+    <rect x="49" y="6" width="2" height="7" rx="1" fill="#FFFFFF" transform="rotate(180 50 50)"/>
+    <rect x="49" y="6" width="2" height="7" rx="1" fill="#FFFFFF" transform="rotate(270 50 50)"/>
+    <g transform="rotate(24 50 50)">
+      <path d="M50 20 L57 50 L43 50 Z" fill="#FFFFFF"/>
+      <path d="M50 80 L57 50 L43 50 Z" fill="#0F4B42" fill-opacity="0.92"/>
+    </g>
+    <circle cx="50" cy="50" r="5.5" fill="#21D46E" stroke="#FFFFFF" stroke-width="2.5"/>
+  </g>
+
+  <!-- wordmark + tagline -->
+  <text x="224" y="123" font-family="'Epilogue','Segoe UI',system-ui,-apple-system,Helvetica,Arial,sans-serif" font-size="68" font-weight="800" letter-spacing="-2.5" fill="#0F4B42">Compass</text>
+  <text x="227" y="166" font-family="'Epilogue','Segoe UI',system-ui,-apple-system,Helvetica,Arial,sans-serif" font-size="23" font-weight="500" letter-spacing="-0.2" fill="#5B6B62">One tap to your Tabbycat private URL.</text>
+</svg>

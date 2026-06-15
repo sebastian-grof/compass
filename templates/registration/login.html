@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "Sign in" %} · Compass{% endblock %}
+
+{% block content %}
+<div class="auth-brand">
+  <span class="compass-badge compass-badge--lg">{% include "components/compass_mark.html" with ring="#FFFFFF" north="#FFFFFF" south="#0F4B42" dot="#21D46E" %}</span>
+  <span class="wordmark">Compass</span>
+  <span class="tagline">{% trans "Your tournaments. One tap." %}</span>
+</div>
+
+<div class="card login-card">
+  <h1 class="auth-title">{% trans "Welcome back" %}</h1>
+  <p class="auth-sub">{% trans "Sign in to your private links." %}</p>
+
+  {% if form.non_field_errors %}
+  <div class="form-error">{{ form.non_field_errors }}</div>
+  {% endif %}
+
+  <form method="post" action="{% url 'login' %}" novalidate>
+    {% csrf_token %}
+
+    <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+    {{ form.username }}
+    {% if form.username.errors %}<div class="field-error">{{ form.username.errors }}</div>{% endif %}
+
+    <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+    {{ form.password }}
+    {% if form.password.errors %}<div class="field-error">{{ form.password.errors }}</div>{% endif %}
+
+    <label class="checkbox">
+      {{ form.remember_me }} <span>{{ form.remember_me.label }}</span>
+    </label>
+
+    <input type="hidden" name="next" value="{{ next }}">
+    <button type="submit" class="btn btn-primary">
+      {% trans "Sign in" %}
+      <svg width="17" height="17" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 9h11M10 4l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </form>
+</div>
+<a class="auth-link" href="{% url 'password_reset' %}">{% trans "Set or reset your password" %}</a>
+<div class="auth-divider"><span>{% trans "or" %}</span></div>
+<a class="btn btn-ghost" href="{% url 'guest' %}">{% trans "Continue as guest" %}</a>
+{% endblock %}

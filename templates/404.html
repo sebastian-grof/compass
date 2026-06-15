@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Page not found" %} · Compass{% endblock %}
+
+{% block content %}
+<div class="empty">
+  <div class="empty-icon">{% include "components/compass_mark.html" %}</div>
+  <h1 class="empty-title">{% trans "Page not found" %}</h1>
+  <p class="empty-text">{% trans "This page does not exist or was moved." %}</p>
+  <a class="btn btn-primary" href="/" style="width:auto;padding:0 22px;margin-top:22px;">{% trans "Back home" %}</a>
+</div>
+{% endblock %}
